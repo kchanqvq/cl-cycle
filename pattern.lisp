@@ -122,6 +122,11 @@
           (make-mbind :pat pat :f function)
           (funcall function pat))))
 
+(defun ct (&rest patterns-and-times)
+  (apply #'c
+         (iter (for (pattern time) on patterns-and-times by #'cddr)
+           (nconcing (make-list time :initial-element pattern)))))
+
 (defmacro defpat (var val)
   `(progn
      (define-symbol-macro ,var (make-var :symbol ',var))
